@@ -1,5 +1,9 @@
 # bicep
 
+prerequisite
+Login to azure and suppose there is a resource group named PLAYGROUND
+```az login
+
 Validate deployment by template
 ```az deployment group validate -g PLAYGROUND -f ./main.bicep
 
