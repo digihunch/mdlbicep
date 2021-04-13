@@ -1,5 +1,5 @@
 param deploySynapse bool = false
-param deployAutomationAccount bool = true
+param deployAutomationAccount bool = false 
 param deployAutumationResources bool = false
 
 module adls2 './storage.bicep' = if (deploySynapse) {

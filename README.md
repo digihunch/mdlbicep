@@ -15,3 +15,6 @@ Cancel deployment by name
 
 Delete deployment by name (in azure, deleting a deployment does not delete the corresponding resources)
 ```az deployment group delete -g PLAYGROUND -n main
+
+
+az deployment group validate -g AutomationTest -f ./atmrsrc.bicep -p atmaccntname=sqlpooladmin
