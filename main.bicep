@@ -1,9 +1,16 @@
 param deploySynapse bool = false
-param deployAutomationAccount bool = false 
-param deployAutumationResources bool = false
+param deployADF bool = false
 
-module adls2 './storage.bicep' = if (deploySynapse) {
+module adls2 './storage.bicep' = if (deployADF) {
   name: 'adls2Deploy'
+}
+
+module adf './adf.bicep' = if (deployADF) {
+  name: 'ADFDeploy'
+}
+
+module dbr './databricks.bicep' = {
+  name: 'DatabricksDeploy'
 }
 
 module synp './synapse.bicep' = if (deploySynapse) {
@@ -14,10 +21,6 @@ module synp './synapse.bicep' = if (deploySynapse) {
   }
 }
 
-module atmacc './atmaccnt.bicep' = if (deployAutomationAccount) {
-  name: 'AutomationAccountDeploy'
-} 
-
-module atmres './atmrsrc.bicep' = if (deployAutumationResources) {
-  name: 'AutomationResourceDeploy'
+module aas './aas.bicep' = {
+  name: 'AASDeploy'
 }
