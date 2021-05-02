@@ -7,13 +7,9 @@ param adls2fs string
 var synapseWorkspaceName = '${synapsePrefix}${uniqueString(resourceGroup().id)}'
 var sqlPoolName = '${sqlPrefix}${uniqueString(resourceGroup().id)}'
 
-/* there are a couple workarounds implemented
+// 1. with synapse workspace, a firewall rule to wide open to all IPs is configured. Ideally, it should only open the Azure deployment service. The option of "Allow Azure services and resources to access this workspace" is available on console, but not represented in ARM template. This should be updated once such option becomes available.
 
-1. with synapse workspace, a firewall rule to wide open to all IPs is configured. Ideally, it should only open the Azure deployment service. The option of "Allow Azure services and resources to access this workspace" is available on console, but not represented in ARM template. This should be updated once such option becomes available.
-
-2. even the firewall rule does not take effect immediately. Therefore it is not possible to delcare child resource afterwards due to error 'Parent resource xxx not found' when declaring child resource outside of parent resource afterwards. Therefore the declaration has to be made at the time of creating parent resource. 
-
-*/
+// 2. even the firewall rule does not take effect immediately. Therefore it is not possible to delcare child resource afterwards due to error 'Parent resource xxx not found' when declaring child resource outside of parent resource afterwards. Therefore the declaration has to be made at the time of creating parent resource. 
 
 resource synp 'Microsoft.Synapse/workspaces@2021-03-01' = {
   name: synapseWorkspaceName
@@ -35,6 +31,7 @@ resource synp 'Microsoft.Synapse/workspaces@2021-03-01' = {
   resource fwr 'firewallRules' = {
     name: 'synpfwrule-wideopen'
     properties: {
+      // remove in the future
       startIpAddress: '0.0.0.0'
       endIpAddress: '255.255.255.255'
     }
@@ -48,12 +45,3 @@ resource synp 'Microsoft.Synapse/workspaces@2021-03-01' = {
     }
   }
 }
-
-//resource sqlp 'Microsoft.Synapse/workspaces/sqlPools@2021-03-01' = {
-//  name: '${synapseWorkspaceName}/${sqlPoolName}'
-//  location: location
-//  sku: {
-//    name: 'DW100c'
-//    capacity: 0
-//  }
-//}

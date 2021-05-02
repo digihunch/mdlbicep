@@ -1,24 +1,9 @@
 param deploySynapse bool = true
-//param deployADF bool = true
-//param deployADB bool = true
 param deployAAS bool = true
 
-module adls2 './storage.bicep' = if (deployADF) {
+module adls2 './storage.bicep' = {
   name: 'adls2Deploy'
 }
-
-/*
-module adf './adf.bicep' = if (deployADF) {
-  name: 'adfDeploy'
-}
-
-module adb './adb.bicep' = if (deployADB) {
-  name: 'adbDeploy'
-  params: {
-    pricingTier: 'premium'    
-  }
-}
-*/
 
 module synp './synapse.bicep' = if (deploySynapse) {
   name: 'synpDeploy'
@@ -31,7 +16,6 @@ module synp './synapse.bicep' = if (deploySynapse) {
 module aas './aas.bicep' = if (deployAAS) {
   name: 'aasDeploy'
   params: {
-    ansvrname: 'servicename'
   }
 }
 

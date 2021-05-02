@@ -1,4 +1,5 @@
 # bicep
+https://docs.microsoft.com/en-au/azure/architecture/solution-ideas/articles/enterprise-data-warehouse
 
 prerequisite
 Login to azure and suppose there is a resource group named AutomationTest
